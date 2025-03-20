@@ -1,7 +1,6 @@
 package org.example.kidway.repository;
 
 
-
 import org.example.kidway.Entity.Organization;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

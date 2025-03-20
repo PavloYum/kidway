@@ -1,21 +1,25 @@
 package org.example.kidway.dto;
 
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-/**
- * DTO для передачи данных организации между API и клиентом.
- */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class OrganizationDTO {
-    private Long id;         // ID организации
-    private String name;     // Название организации
-    private String description; // Описание
-    private Double lat;      // Координаты (широта)
-    private Double lon;      // Координаты (долгота)
-    private String photo;    // Ссылка на фото
+    @NotBlank(message = "Название обязательно")
+    private String name;
+
+    private String description;
+
+    @NotNull(message = "Координаты обязательны")
+    private Double latitude;
+
+    @NotNull(message = "Координаты обязательны")
+    private Double longitude;
+
+    private String photoUrl;
+
+    //@NotNull(message = "ID пользователя обязателен")
+    //private Long userId;
 }
 
