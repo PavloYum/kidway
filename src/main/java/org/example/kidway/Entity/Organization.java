@@ -26,4 +26,5 @@ public class Organization {
     //@ManyToOne
     //@JoinColumn(name = "user_id", nullable = false) // Связь с пользователем (владелец)
     //private User user;
+    //
 }
