@@ -23,7 +23,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String tel;
-//
+
     //@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     //private List<Organization> organizations;
 }
