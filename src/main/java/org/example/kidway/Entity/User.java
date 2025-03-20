@@ -25,7 +25,7 @@ public class User {
     private String tel;
 
     //@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    //private List<Organization> organizations;
+    //private List<Organization> organizations;//
 }
 
 
