@@ -2,11 +2,14 @@ package com.team48.kidway.service;
 
 import com.team48.kidway.dto.UserDTO;
 import com.team48.kidway.dto.UserRegisterDTO;
+import com.team48.kidway.model.Child;
 import com.team48.kidway.model.User;
+import com.team48.kidway.repository.ChildRepository;
 import com.team48.kidway.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -15,6 +18,9 @@ public class UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ChildRepository childRepository;
 
     public UserDTO registerUser(UserRegisterDTO userRegisterDTO) {
         if (userRepository.findByEmail(userRegisterDTO.getEmail()) != null) {
@@ -52,5 +58,13 @@ public class UserService {
         userDTO.setSecondName(user.getSecondName());
         userDTO.setTel(user.getTel());
         return userDTO;
+    }
+    @Transactional
+    public Child createChild(Long userId, Child child) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        child.setParent(user); // Устанавливаем родителя
+        return childRepository.save(child);
     }
 }

@@ -1,5 +1,6 @@
 package com.team48.kidway.controller;
 
+import com.team48.kidway.dto.LoginResponseDto;
 import com.team48.kidway.dto.UserDTO;
 import com.team48.kidway.dto.UserLoginDTO;
 import com.team48.kidway.dto.UserRegisterDTO;
@@ -29,13 +30,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody UserLoginDTO userLoginDTO) {
+    public ResponseEntity<LoginResponseDto> loginUser(@RequestBody UserLoginDTO userLoginDTO) {
         UserDTO existingUser = userService.findUserDTOByEmail(userLoginDTO.getEmail());
-        if (existingUser == null || !passwordEncoder.matches(userLoginDTO.getPassword(), userService.findByEmail(userLoginDTO.getEmail()).getPassword())) {
-            return ResponseEntity.status(401).body("Неверный email или пароль");
-        }
+//        if (existingUser == null || !passwordEncoder.matches(userLoginDTO.getPassword(), userService.findByEmail(userLoginDTO.getEmail()).getPassword())) {
+//            return ResponseEntity.status(401));
+//        }
         String token = jwtUtil.generateToken(userLoginDTO.getEmail());
-        return ResponseEntity.ok(token);
+        LoginResponseDto loginResponseDto = new LoginResponseDto();
+        loginResponseDto.setToken(token);
+        return ResponseEntity.ok(loginResponseDto);
     }
 
     @GetMapping("/email/{email}")
@@ -46,4 +49,5 @@ public class UserController {
         }
         return ResponseEntity.ok(user);
     }
+
 }

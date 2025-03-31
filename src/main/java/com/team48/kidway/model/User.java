@@ -24,11 +24,14 @@ public class User {
     private String secondName;
     private String tel;
 
-    @ManyToMany
+    @OneToMany
     @JoinTable(name = "User_Children",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "child_id")
     )
     private Set<Child> children = new HashSet<>();
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Child> child = new HashSet<>();
 }
 //

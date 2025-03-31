@@ -22,6 +22,7 @@ public class Child {
     private Double height;
     private String hobbies;
 
-    @ManyToMany(mappedBy = "children")
-    private Set<User> users = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private User parent;
 }

@@ -6,7 +6,15 @@ import com.team48.kidway.model.User;
 import com.team48.kidway.repository.OrganizationRepository;
 import com.team48.kidway.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class OrganizationService {
@@ -39,15 +47,15 @@ public class OrganizationService {
         return mapToDTO(organization);
     }
 
+    public List<OrganizationDTO> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("name").ascending()); // Пагинация + сортировка по имени
+        Page<Organization> organizationPage = organizationRepository.findAll(pageable);
+        return organizationPage.getContent().stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
     private OrganizationDTO mapToDTO(Organization organization) {
-        OrganizationDTO organizationDTO = new OrganizationDTO();
-        organizationDTO.setId(organization.getId());
-        organizationDTO.setName(organization.getName());
-        organizationDTO.setDescription(organization.getDescription());
-        organizationDTO.setLat(organization.getLat());
-        organizationDTO.setLongi(organization.getLongi());
-        organizationDTO.setPhoto(organization.getPhoto());
-        organizationDTO.setUserId(organization.getUser() != null ? organization.getUser().getId() : null);
-        return organizationDTO;
+        return new OrganizationDTO();
     }
 }
